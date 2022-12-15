@@ -4,6 +4,7 @@ import Notiflix from 'notiflix';
 
 const refs = {
   startBtn: document.querySelector('button[data-start]'), //Кнопка «Start»
+  dateChosen: document.querySelector('#datetime-picker'), //Вибрана дата в інпуті
   numberDays: document.querySelector('span[data-days]'),
   numberHours: document.querySelector('span[data-hours]'),
   numberMinutes: document.querySelector('span[data-minutes]'),
@@ -41,24 +42,29 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
-function startTimer(e) {
-  const startTime = Date.now();
+let intervalId = null;
 
-  setInterval(() => {
+function startTimer() {
+  refs.startBtn.disabled = true; //Кнопка «Start» неактивна
+
+  const deadLineDate = new Date(refs.dateChosen.value).getTime();
+
+  intervalId = setInterval(() => {
     const currentTime = Date.now();
-    const deltaTime = currentTime - startTime;
+    let timeLeft = deadLineDate - currentTime;
+    console.log(timeLeft);
 
-    const timeComponents = convertMs(deltaTime);
+    const timeComponents = convertMs(deadLineDate - currentTime);
+
+    if (timeLeft <= 1) {
+      return clearInterval(intervalId);
+    }
 
     refs.numberDays.textContent = timeComponents.days;
     refs.numberHours.textContent = timeComponents.hours;
     refs.numberMinutes.textContent = timeComponents.minutes;
     refs.numberSeconds.textContent = timeComponents.seconds;
   }, 1000);
-}
-
-function updateClockface({ days, hours, minutes, seconds }) {
-  refs.numberSeconds.textContent = '5';
 }
 
 function addLeadingZero(value) {
@@ -86,7 +92,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}

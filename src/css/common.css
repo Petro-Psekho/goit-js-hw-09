@@ -16,3 +16,43 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.timer {
+  display: flex;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.field:not(:last-child) {
+  margin-right: 20px;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 120px;
+  padding: 15px 15px;
+
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 60px;
+
+  color: #ffffff;
+  background-color: #4a6479;
+
+  border-radius: 50%;
+  text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 20px rgba(10, 175, 230, 0);
+}
+
+.label {
+  font-family: 'Square Peg', cursive;
+  font-size: 45px;
+  color: #4a6479;
+}
