@@ -51,10 +51,9 @@ function startTimer() {
 
   intervalId = setInterval(() => {
     const currentTime = Date.now();
-    let timeLeft = deadLineDate - currentTime;
-    console.log(timeLeft);
+    const timeLeft = deadLineDate - currentTime;
 
-    const timeComponents = convertMs(deadLineDate - currentTime);
+    const timeComponents = convertMs(timeLeft);
 
     if (timeLeft <= 1) {
       return clearInterval(intervalId);
